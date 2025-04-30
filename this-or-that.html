@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>This or That - เกมทายใจให้แฟน</title>
+  <style>
+    body {
+      font-family: 'Kanit', sans-serif;
+      background: #fff5f7; /* พื้นหลังชมพูอ่อน */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .card {
+      background: #ffe6ec;
+      padding: 2rem;
+      border-radius: 24px;
+      box-shadow: 0 8px 16px rgba(255, 182, 193, 0.2);
+      width: 90%;
+      max-width: 420px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    button {
+      margin: 10px;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 16px;
+      background: #ffc0cb;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    button:hover {
+      background: #ff94b8;
+      transform: scale(1.05);
+    }
+
+    #result {
+      font-size: 1.6rem;
+      margin-top: 1rem;
+      color: #d63384;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="quiz">
+    <h2 id="question">พร้อมเล่นยังงับ? 💕</h2>
+    <div id="options">
+      <button onclick="startGame()">เริ่มเลย!</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { q: "ไปทะเล 🌊 หรือ ไปภูเขา 🏔️", a: ["ทะเล", "ภูเขา"] },
+      { q: "ชานม 🧋 หรือ กาแฟ ☕", a: ["ชานม", "กาแฟ"] },
+      { q: "นอนดูหนัง 🎬 หรือ ออกไปเดินเล่น 🚶‍♀️", a: ["ดูหนัง", "เดินเล่น"] },
+      { q: "หมูกระทะ 🐷 หรือ ชาบู 🍲", a: ["หมูกระทะ", "ชาบู"] },
+      { q: "แมว 🐱 หรือ หมา 🐶", a: ["แมว", "หมา"] }
+    ];
+
+    let current = 0;
+    let answers = [];
+
+    function startGame() {
+      current = 0;
+      answers = [];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const q = questions[current];
+      document.getElementById('question').textContent = q.q;
+      document.getElementById('options').innerHTML = `
+        <button onclick="selectAnswer('${q.a[0]}')">${q.a[0]}</button>
+        <button onclick="selectAnswer('${q.a[1]}')">${q.a[1]}</button>
+      `;
+    }
+
+    function selectAnswer(answer) {
+      answers.push(answer);
+      current++;
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      let score = Math.floor(Math.random() * 21) + 80;
+      document.getElementById('question').textContent = "ผลลัพธ์ความน่ารักของคุณ 💗";
+      document.getElementById('options').innerHTML = `
+        <div id="result">คุณเข้ากันได้ ${score}% 🥰</div>
+        <button onclick="startGame()">เล่นใหม่อีกครั้ง</button>
+      `;
+    }
+  </script>
+
+</body>
+</html>
